@@ -74,6 +74,12 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        dateChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateChooserPropertyChange(evt);
+            }
+        });
+
         textAreaPeristiwa.setEditable(false);
         textAreaPeristiwa.setColumns(20);
         textAreaPeristiwa.setRows(5);
@@ -114,7 +120,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonHitung)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,10 +134,10 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -177,6 +183,16 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     private void buttonHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHitungActionPerformed
+        hitungUmur();
+    }//GEN-LAST:event_buttonHitungActionPerformed
+
+    private void dateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            hitungUmur();
+        }
+    }//GEN-LAST:event_dateChooserPropertyChange
+
+    private void hitungUmur() {
         Date tanggalTerpilih = dateChooser.getDate();
         if (tanggalTerpilih == null) {
             JOptionPane.showMessageDialog(this, "Pilih tanggal lahir terlebih dahulu!");
@@ -197,8 +213,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 tanggal = Integer.toString(tanggalLahir.getDayOfMonth());
             peristiwaPenting(bulan, tanggal);
         }
-    }//GEN-LAST:event_buttonHitungActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
