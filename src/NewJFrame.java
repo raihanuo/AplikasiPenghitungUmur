@@ -143,6 +143,23 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private String ubahBulan(String month) {
+        switch (month) {
+            case "1":    return "Januari";
+            case "2":    return "Februari";
+            case "3":    return "Maret";
+            case "4":    return "April";
+            case "5":    return "Mei";
+            case "6":    return "Juni";
+            case "7":    return "Juli";
+            case "8":    return "Agustus";
+            case "9":    return "September";
+            case "10":    return "Oktober";
+            case "11":    return "November";
+            case "12":    return "Desember";
+            default:       return "";
+        }
+    }
     private void peristiwaPenting(String month, String date) {
         try {
             String url = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/" + month + "/" + date;
@@ -166,7 +183,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 JSONObject jsonResponse = new JSONObject(response.toString());
                 JSONArray eventsArray = jsonResponse.getJSONArray("events");
 
-                textAreaPeristiwa.setText("Peristiwa penting pada hari ini di Wikipedia :\n");
+                textAreaPeristiwa.setText("Peristiwa penting pada " + date + " " + ubahBulan(month) + " di Wikipedia :\n");
                 for (int i = 0; i < eventsArray.length(); i++) {
                     JSONObject event = eventsArray.getJSONObject(i);
                     int year = event.getInt("year");
