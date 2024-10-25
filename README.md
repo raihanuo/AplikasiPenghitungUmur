@@ -34,7 +34,6 @@ Aplikasi ini adalah program berbasis GUI yang memungkinkan pengguna untuk menghi
 ![2](https://github.com/user-attachments/assets/ee2921f7-4475-4c0b-a85a-8d177f9b775d)
 ![2_](https://github.com/user-attachments/assets/eeac78b6-5100-4ee2-9ccf-5e39de57cc14)
 
-
 ## Cara Menjalankan Program
 1. Pastikan Anda memiliki **Java Development Kit (JDK)** terinstal di sistem Anda.
 2. Clone repositori ini ke mesin lokal Anda.
