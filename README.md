@@ -31,8 +31,9 @@ Aplikasi ini adalah program berbasis GUI yang memungkinkan pengguna untuk menghi
 - **Multi-Fungsi**: Tidak hanya menghitung umur tetapi juga memberikan konteks historis tentang tanggal lahir pengguna.
 
 ## Screenshot
-![2](https://github.com/user-attachments/assets/ee2921f7-4475-4c0b-a85a-8d177f9b775d)
-![2_](https://github.com/user-attachments/assets/eeac78b6-5100-4ee2-9ccf-5e39de57cc14)
+![2](https://github.com/user-attachments/assets/0a0524d4-39bb-4b32-8366-0323e8731d37)
+![2_](https://github.com/user-attachments/assets/a02f054b-0f52-45bd-b1f1-9a4b522bf505)
+
 
 ## Cara Menjalankan Program
 1. Pastikan Anda memiliki **Java Development Kit (JDK)** terinstal di sistem Anda.
