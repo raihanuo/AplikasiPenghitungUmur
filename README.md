@@ -38,4 +38,5 @@ Aplikasi ini adalah program Java berbasis GUI yang memungkinkan pengguna untuk m
 2. Clone repositori ini ke mesin lokal Anda.
    ```bash
    git clone https://github.com/username/repo-name.git
-3. Jalankan aplikasi dengan mengkompilasi dan mengeksekusi file `NewJFrame.java`.
+3. Tambahkan jcalendar-1.4.jar dari folder lib ke Libary Anda.
+4. Jalankan aplikasi dengan mengkompilasi dan mengeksekusi file `NewJFrame.java`.
