@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,14 +15,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
@@ -143,6 +140,7 @@ public class NewJFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Mengubah angka bulan menjadi nama bulan dalam Bahasa Indonesia
     private String ubahBulan(String month) {
         switch (month) {
             case "1":    return "Januari";
@@ -157,77 +155,98 @@ public class NewJFrame extends javax.swing.JFrame {
             case "10":    return "Oktober";
             case "11":    return "November";
             case "12":    return "Desember";
-            default:       return "";
+            default:       return ""; // Mengembalikan string kosong jika input tidak valid
         }
     }
+    
     private void peristiwaPenting(String month, String date) {
         try {
+            // Membuat URL untuk mendapatkan data peristiwa penting dari Wikipedia berdasarkan bulan dan tanggal
             String url = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/" + month + "/" + date;
 
+            // Membuka koneksi ke URL
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setRequestMethod("GET"); // Mengatur metode permintaan ke GET
+            con.setRequestProperty("User-Agent", "Mozilla/5.0"); // Menetapkan User-Agent
 
-            int responseCode = con.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            int responseCode = con.getResponseCode(); // Mendapatkan kode respons dari permintaan
+            if (responseCode == HttpURLConnection.HTTP_OK) { // Memeriksa apakah permintaan berhasil
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream())); // Membaca respons
                 String inputLine;
                 StringBuffer response = new StringBuffer();
 
+                // Mengumpulkan data dari respons
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-                in.close();
+                in.close(); // Menutup BufferedReader
 
+                // Mengonversi respons JSON ke objek JSONObject
                 JSONObject jsonResponse = new JSONObject(response.toString());
-                JSONArray eventsArray = jsonResponse.getJSONArray("events");
+                JSONArray eventsArray = jsonResponse.getJSONArray("events"); // Mendapatkan array peristiwa dari respons
 
+                // Menampilkan judul di textArea
                 textAreaPeristiwa.setText("Peristiwa penting pada " + date + " " + ubahBulan(month) + " di Wikipedia :\n");
+                // Mengulangi semua peristiwa dan menampilkannya di textArea
                 for (int i = 0; i < eventsArray.length(); i++) {
-                    JSONObject event = eventsArray.getJSONObject(i);
-                    int year = event.getInt("year");
-                    String description = event.getString("text");
-                    textAreaPeristiwa.append(year + " : " + description + "\n");
+                    JSONObject event = eventsArray.getJSONObject(i); // Mendapatkan objek peristiwa
+                    int year = event.getInt("year"); // Mendapatkan tahun peristiwa
+                    String description = event.getString("text"); // Mendapatkan deskripsi peristiwa
+                    textAreaPeristiwa.append(year + " : " + description + "\n"); // Menambahkan peristiwa ke textArea
                 }
             } else {
+                // Menangani jika permintaan tidak berhasil
                 textAreaPeristiwa.setText("Gagal mendapatkan data dari Wikipedia.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            textAreaPeristiwa.setText("Terjadi kesalahan saat mengambil data.");
+            e.printStackTrace(); // Menampilkan stack trace jika terjadi kesalahan
+            textAreaPeristiwa.setText("Terjadi kesalahan saat mengambil data."); // Menampilkan pesan kesalahan ke textArea
         }
     }
 
     private void buttonHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHitungActionPerformed
+        // Memanggil metode untuk menghitung umur
         hitungUmur();
     }//GEN-LAST:event_buttonHitungActionPerformed
 
     private void dateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateChooserPropertyChange
+        // Mengecek apakah properti yang berubah adalah "date"
         if ("date".equals(evt.getPropertyName())) {
+            // Memanggil metode untuk menghitung umur ketika tanggal dipilih
             hitungUmur();
         }
     }//GEN-LAST:event_dateChooserPropertyChange
 
     private void hitungUmur() {
+        // Mendapatkan tanggal yang dipilih dari date chooser
         Date tanggalTerpilih = dateChooser.getDate();
+        // Mengecek apakah tanggal lahir telah dipilih
         if (tanggalTerpilih == null) {
+            // Menampilkan pesan peringatan jika tanggal lahir belum dipilih
             JOptionPane.showMessageDialog(this, "Pilih tanggal lahir terlebih dahulu!");
         } else {
+            // Mengonversi tanggal terpilih ke LocalDate
             LocalDate tanggalLahir = tanggalTerpilih.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate sekarang = LocalDate.now();
 
+            // Menghitung selisih umur dalam tahun, bulan, dan hari
             Period umur = Period.between(tanggalLahir, sekarang);
+            // Menampilkan umur ke label
             labelUmur.setText("Umur : " + umur.getYears() + " Tahun, " + umur.getMonths() + " Bulan, " + umur.getDays() + " Hari");
 
+            // Menghitung ulang tahun berikutnya
             LocalDate ultah = tanggalLahir.withYear(sekarang.getYear());
             if (ultah.isBefore(sekarang) || ultah.isEqual(sekarang)) {
-                ultah = ultah.plusYears(1);
+                ultah = ultah.plusYears(1); // Menambah tahun jika ulang tahun sudah lewat
             }
+            // Menampilkan tanggal ulang tahun berikutnya ke label
             labelUltah.setText("Ulang Tahun Berikutnya : " + ultah.toString());
-            
+
+            // Mengonversi bulan dan tanggal ke string untuk diproses lebih lanjut
             String bulan = Integer.toString(tanggalLahir.getMonthValue()),
-                tanggal = Integer.toString(tanggalLahir.getDayOfMonth());
+                   tanggal = Integer.toString(tanggalLahir.getDayOfMonth());
+            // Memanggil metode untuk mengecek peristiwa penting pada tanggal dan bulan tersebut
             peristiwaPenting(bulan, tanggal);
         }
     }
